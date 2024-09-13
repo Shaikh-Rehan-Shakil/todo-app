@@ -1,6 +1,7 @@
 // Selectors
 const $form = document.getElementById('todoCreateForm');
 const $displayTodoContainer = document.getElementById('displayTodoContainer');
+const $toggleForm = document.getElementById('addTodoForm')
 
 // State
 let todoList = [
@@ -42,6 +43,14 @@ let todoList = [
 ];
 
 // Handlers
+function toggleTodoForm() {
+    if ($form.classList.contains('hidden')) {
+        $form.classList.remove('hidden');
+    } else {
+        $form.classList.add('hidden');
+    }
+}
+
 function sanitize(str){
     const temp = document.createElement('div');
     temp.textContent = str;
@@ -134,6 +143,8 @@ function render(todo) {
 }
 
 // Events
+$toggleForm.addEventListener('click', toggleTodoForm);
+
 $form.addEventListener('submit', handleFormSubmit);
 
 // On Mount Logic

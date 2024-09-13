@@ -11,8 +11,8 @@
         <!-- Sidebar -->
         <div class="w-64 bg-gray-800 shadow-md p-6">
           <div class="flex justify-between items-center mb-4">
-            <h2 class="text-xl font-bold text-gray-100">Sort Todos</h2>
-            <button class="bg-purple-600 text-white p-2 rounded-full hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-opacity-50">
+            <h2 class="text-xl font-bold text-gray-100">Your Todo's</h2>
+            <button id="addTodoForm" class="bg-purple-600 text-white p-2 rounded-full hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-opacity-50">
               <!-- Plus Icon -->
               <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
@@ -38,7 +38,7 @@
         <!-- Main Content -->
         <div class="flex-1 p-8 overflow-auto">
           <!-- Todo Form -->
-          <form id="todoCreateForm" class="mb-8 bg-gray-800 p-6 rounded-lg">
+          <form id="todoCreateForm" class="mb-8 bg-gray-800 p-6 rounded-lg hidden">
             <div class="mb-4">
               <label for="title" class="block text-sm font-medium text-gray-300 mb-1">Title</label>
               <input type="text" id="title" class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-purple-500" required />
