@@ -38,17 +38,13 @@ let todoList = [
         description: "Finish reading the current book",
         priority: "medium",
         createDate: "08/09/2024",
-        dueDate: "2024/09/30"
+        dueDate: "2006/09/30"
     }
 ];
 
 // Handlers
 function toggleTodoForm() {
-    if ($form.classList.contains('hidden')) {
-        $form.classList.remove('hidden');
-    } else {
-        $form.classList.add('hidden');
-    }
+    $form.classList.contains('hidden') ? $form.classList.remove('hidden') : $form.classList.add('hidden');
 }
 
 function sanitize(str){
@@ -74,6 +70,7 @@ function createTodo() {
 function handleFormSubmit(event) {
     event.preventDefault();
     createTodo();
+    toggleTodoForm();
 }
 
 function getPriorityTag(priority) {
@@ -90,21 +87,38 @@ function getPriorityTag(priority) {
         text = 'Medium';
         break;
       case 'low':
-        colorClass = 'bg-blue-600';
+        colorClass = 'bg-emerald-700';
         text = 'Low';
         break;
       default:
-        colorClass = 'bg-gray-600';
-        text = 'Unknown';
         break;
     }
   
     return `<span class="px-2 py-1 text-xs font-semibold rounded ${colorClass}">${text}</span>`;
   }
 
+  function getDueDateStatus(todo) {
+    const today = new Date();
+    const dueDate = new Date(todo.dueDate);
+    const diffTime = dueDate.getTime() - today.getTime();
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+    if (diffDays < 0) {
+        return `
+            <p class="mt-auto mb-auto text-rose-500">${dueDate.toLocaleDateString()} (overdue)</p>
+        `;
+    } else if (diffDays <= 3) {
+        return `
+            <p class="mt-auto mb-auto text-yellow-600">${dueDate.toLocaleDateString()}(upcoming)</p>
+        `;
+    } else {
+        return `<p class="mt-auto mb-auto">${dueDate.toLocaleDateString()}</p>`;
+    }
+}
+
 function render(todo) {
     todoItem = document.createElement('li')
-    todoItem.classList.add("bg-gray-800", "p-4", "rounded-lg", "shadow-sm", "border", "border-gray-700", "hover:shadow-md", "transition-shadow", "duration-200");
+    todoItem.classList.add("bg-gray-900", "p-4", "rounded-lg", "shadow-sm", "border", "border-gray-700", "hover:shadow-md", "transition-shadow", "duration-200");
     todoItem.innerHTML = `
             <div class="flex justify-between items-start mb-2">
             <div class="flex-1">
@@ -134,8 +148,12 @@ function render(todo) {
             </div>
             </div>
             <div class="text-sm text-gray-500">
-            <p>Created at: ${todo.createDate}</p>
-            <p>Due by: ${todo.dueDate}</p>
+            </div>
+            <div class="flex text-gray-600 text-xs">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-5 w-4 mr-1">
+                    <path fill-rule="evenodd" d="M6.75 2.25A.75.75 0 0 1 7.5 3v1.5h9V3A.75.75 0 0 1 18 3v1.5h.75a3 3 0 0 1 3 3v11.25a3 3 0 0 1-3 3H5.25a3 3 0 0 1-3-3V7.5a3 3 0 0 1 3-3H6V3a.75.75 0 0 1 .75-.75Zm13.5 9a1.5 1.5 0 0 0-1.5-1.5H5.25a1.5 1.5 0 0 0-1.5 1.5v7.5a1.5 1.5 0 0 0 1.5 1.5h13.5a1.5 1.5 0 0 0 1.5-1.5v-7.5Z" clip-rule="evenodd" />
+                </svg>
+                ${getDueDateStatus(todo)}
             </div>
     `;
 
